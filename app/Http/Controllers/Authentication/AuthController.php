@@ -5,10 +5,13 @@ namespace App\Http\Controllers\Authentication;
 use App\Helper\ResponseHelper;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Notifications\ResetPasswordNotification;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
@@ -77,4 +80,59 @@ class AuthController extends Controller
         }
     }
     // Logout Part end ***************************
+
+    // Reset Password Email Send Part start ***************************
+    public function resetPasswordEmail(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|string|email|max:255|exists:users,email',
+        ]);
+        try {
+
+            $token = Str::random(64);
+            DB::table('password_reset_tokens')->updateOrInsert(
+                ['email' => $request->email],
+                [
+                    'token' => $token,
+                    'created_at' => Carbon::now(),
+                ]
+            );
+            $user = User::where('email', $request->email)->first();
+            $user->notify(new ResetPasswordNotification($token));
+
+            return ResponseHelper::Out(true, 'Reset Password Link Sent to Your Email', 200);
+        } catch (ValidationException $e) {
+            return ResponseHelper::Out(false, $e->errors(), 422);
+        } catch (Exception $e) {
+            return ResponseHelper::Out(false, 'Failed to Send Reset Password Link, Please Try Again.', 500);
+        }
+    }
+    // Reset Password Email Send Part end ***************************
+
+    // Reset Password Part start ***************************
+    public function resetPassword(Request $request)
+    {
+        try {
+            $request->validate([
+                'token' => 'required',
+                'password' => 'required|string|min:6|confirmed',
+            ]);
+
+            $token = DB::table('password_reset_tokens')->where('token', $request->token)->first();
+            if (! $token) {
+                return ResponseHelper::Out(false, 'Invalid or Expired Token', 400);
+            }
+            $user = User::where('email', $token->email)
+                ->update(['password' => Hash::make($request->password)]);
+            DB::table('password_reset_tokens')->where(['token' => $request->token])->delete();
+
+            return ResponseHelper::Out(true, 'Password Reset Successful', 200);
+
+        } catch (ValidationException $e) {
+            return ResponseHelper::Out(false, $e->errors(), 422);
+        } catch (Exception $e) {
+            return ResponseHelper::Out(false, 'Failed to Reset Password, Please Try Again.', 500);
+        }
+    }
+    // Reset Password Part end ***************************
 }

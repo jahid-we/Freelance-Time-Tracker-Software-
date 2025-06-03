@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Route;
 // Uses Laravel Sanctum for API token authentication
 // ==================================================
 
-
 // =====================================================
 // =============== Authentication Routes ===============
 // =====================================================
@@ -19,9 +18,10 @@ Route::middleware('guest')->controller(AuthController::class)->group(function ()
 
     Route::post('/register', 'register')->name('register');
     Route::post('/login', 'login')->name('login');
+    Route::post('/reset-password-email', 'resetPasswordEmail')->name('reset-password-email');
+    Route::post('/reset-password', 'resetPassword')->name('reset-password');
 
 });
-
 
 // =====================================================
 // =============== Protected Auth Routes ===============
@@ -31,7 +31,6 @@ Route::middleware('auth:sanctum')->controller(AuthController::class)->group(func
     Route::post('/logout', 'logout')->name('logout');
 
 });
-
 
 // =====================================================
 // =============== Client Routes =======================
@@ -47,7 +46,6 @@ Route::middleware('auth:sanctum')->controller(ClientController::class)->group(fu
 
 });
 
-
 // =====================================================
 // =============== Project Routes ======================
 // =====================================================
@@ -62,7 +60,6 @@ Route::middleware('auth:sanctum')->controller(ProjectController::class)->group(f
     Route::get('/get-projects-by-client/{clientId}', 'getProjectsByClient')->name('get-projects-by-client');
 
 });
-
 
 // =====================================================
 // =============== Time Log Related Routes =============
