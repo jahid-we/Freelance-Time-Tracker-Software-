@@ -34,13 +34,21 @@ const updatePassword = async () => {
     console.error('Error updating password:', error);
     alert('Failed to update password. Please try again.');
   }
-};
+}
+// Navigation handlers
+const goBack = () => window.history.back();
 </script>
 
 <template>
 <div class="d-flex flex-column min-vh-100">
     <div class="container d-flex justify-content-center align-items-center flex-grow-1">
       <div class="col-md-6">
+      <button
+                @click.prevent="goBack"
+                class="btn btn-outline-dark shadow mb-3"
+            >
+                <i class="bi bi-arrow-left"></i> Back
+        </button>
         <div class="card shadow w-100">
           <div class="card-header bg-dark text-white">Reset Password</div>
 

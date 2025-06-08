@@ -35,13 +35,20 @@ const handleLogin = async () =>{
     }
 
 }
-
+// Navigation handlers
+const goBack = () => window.history.back();
 </script>
 
 <template>
   <div class="d-flex flex-column min-vh-100"> <!-- Full height container -->
     <div class="container d-flex justify-content-center align-items-center flex-grow-1"> <!-- Main content container that takes available space -->
         <div class="col-md-6">
+        <button
+                @click.prevent="goBack"
+                class="btn btn-outline-dark shadow mb-3"
+            >
+                <i class="bi bi-arrow-left"></i> Back
+        </button>
           <div class="card shadow">
             <div class="card-header bg-dark text-white">Login</div>
 
