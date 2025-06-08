@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers\Authentication;
 
-use App\Helper\ResponseHelper;
-use App\Http\Controllers\Controller;
-use App\Models\User;
-use App\Notifications\ResetPasswordNotification;
 use Exception;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
+use Carbon\Carbon;
+use App\Models\User;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Helper\ResponseHelper;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
+use App\Notifications\ResetPasswordNotification;
 
 class AuthController extends Controller
 {
@@ -31,7 +32,7 @@ class AuthController extends Controller
                 'password' => Hash::make($request->password),
             ]);
 
-            return ResponseHelper::Out(true, 'Registration Successful', 200);
+            return ResponseHelper::Out(true, 'Registration Successful', 201);
 
         } catch (ValidationException $e) {
             return ResponseHelper::Out(false, $e->errors(), 422);
