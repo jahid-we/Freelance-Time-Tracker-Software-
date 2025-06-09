@@ -20,12 +20,12 @@ class AuthController extends Controller
     // Registration Part start ***************************
     public function register(request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6',
-        ]);
         try {
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|string|email|max:255|unique:users',
+                'password' => 'required|string|min:6',
+            ]);
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
@@ -46,11 +46,11 @@ class AuthController extends Controller
     // Login Part start ***************************
     public function login(Request $request)
     {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required|min:6',
-        ]);
         try {
+            $request->validate([
+                'email' => 'required|string|email|max:255|exists:users,email',
+                'password' => 'required|string|min:6',
+            ]);
             $credentials = $request->only('email', 'password');
             $remember = ($request->filled('remember')) ? true : false;
             if (Auth::attempt($credentials, $remember)) {
@@ -59,7 +59,7 @@ class AuthController extends Controller
 
                 return ResponseHelper::Out(true, 'Login Successful', 200, $token);
             } else {
-                return ResponseHelper::Out(false, 'Invalid Credentials', 401);
+                return ResponseHelper::Out(false, 'Invalid Credentials,Check Your Email Or Password.', 401);
             }
         } catch (ValidationException $e) {
             return ResponseHelper::Out(false, $e->errors(), 422);
@@ -85,10 +85,10 @@ class AuthController extends Controller
     // Reset Password Email Send Part start ***************************
     public function resetPasswordEmail(Request $request)
     {
-        $request->validate([
-            'email' => 'required|string|email|max:255|exists:users,email',
-        ]);
         try {
+            $request->validate([
+                'email' => 'required|string|email|max:255|exists:users,email',
+            ]);
 
             $token = Str::random(64);
             DB::table('password_reset_tokens')->updateOrInsert(
