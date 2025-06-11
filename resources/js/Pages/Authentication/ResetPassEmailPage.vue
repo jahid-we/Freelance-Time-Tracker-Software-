@@ -9,7 +9,7 @@ const emailError = ref("");
 
 const sentEmail = async () => {
     try {
-        const response = await axios.post("/api/reset-password-email", {
+        const response = await axios.post("reset-password-email", {
             email: email.value,
         });
 

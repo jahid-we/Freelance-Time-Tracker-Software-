@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers\Authentication;
 
-use Exception;
-use Carbon\Carbon;
-use App\Models\User;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 use App\Helper\ResponseHelper;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\ValidationException;
+use App\Models\User;
 use App\Notifications\ResetPasswordNotification;
+use Carbon\Carbon;
+use Exception;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
@@ -54,10 +54,10 @@ class AuthController extends Controller
             $credentials = $request->only('email', 'password');
             $remember = ($request->filled('remember')) ? true : false;
             if (Auth::attempt($credentials, $remember)) {
+                $request->session()->regenerateToken();
                 $user = Auth::user();
-                $token = $user->createToken('auth_token')->plainTextToken;
 
-                return ResponseHelper::Out(true, 'Login Successful', 200, $token);
+                return ResponseHelper::Out(true, 'Login Successful', 200);
             } else {
                 return ResponseHelper::Out(false, 'Invalid Credentials,Check Your Email Or Password.', 401);
             }
@@ -73,7 +73,9 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         try {
-            $request->user()->currentAccessToken()->delete();
+            Auth::logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
 
             return ResponseHelper::Out(true, 'Logout Successful', 200);
         } catch (Exception $e) {

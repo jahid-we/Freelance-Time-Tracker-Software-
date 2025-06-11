@@ -20,7 +20,7 @@ const updatePassword = async () => {
     }
 
     try {
-        const response = await axios.post("/api/reset-password", {
+        const response = await axios.post("/reset-password", {
             token: token.value,
             password: newPassword.value,
             password_confirmation: confirmPassword.value,

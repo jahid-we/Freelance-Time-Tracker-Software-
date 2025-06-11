@@ -6,7 +6,6 @@ import Footer from "@/Components/Footer.vue";
 
 const email = ref("");
 const password = ref("");
-const authToken = ref("");
 const remember = ref(false);
 
 const emailError = ref("");
@@ -18,7 +17,7 @@ const handleLogin = async () => {
         return;
     }
     try {
-        const response = await axios.post("api/login", {
+        const response = await axios.post("/login", {
             email: email.value,
             password: password.value,
             remember: remember.value,
@@ -26,11 +25,8 @@ const handleLogin = async () => {
         if (response.status === 200) {
             emailError.value = "";
             passwordError.value = "";
-            authToken.value = response.data.token;
-            localStorage.setItem("auth_token", authToken.value);
-            axios.defaults.headers.common["Authorization"] = `Bearer ${authToken.value}`;
             setTimeout(() => {
-                router.visit("/api/dashboard");
+                router.visit("/dashboard");
             }, 1000);
             alert("Login successful!");
         } else {
