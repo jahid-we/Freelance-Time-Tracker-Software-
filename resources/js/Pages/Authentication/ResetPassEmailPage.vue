@@ -16,7 +16,7 @@ const sentEmail = async () => {
         if (response.status === 200) {
             emailError.value = "";
             alert("Reset link sent to your email.");
-            setTimeout(() => router.visit("/loginPage"), 1000);
+            setTimeout(() => router.visit("/login"), 1000);
         }
     } catch (error) {
         if (error.response && error.response.status === 422) {
@@ -75,7 +75,7 @@ const goBack = () => window.history.back();
 
                         <div class="text-center mt-3">
                             Remembered your password?
-                            <Link href="/loginPage">Login</Link>
+                            <Link href="/login">Login</Link>
                         </div>
                     </div>
                 </div>

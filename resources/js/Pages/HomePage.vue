@@ -11,7 +11,7 @@ import Footer from "@/Components/Footer.vue";
                 <i class="bi bi-clock-history me-2"></i>Freelance Time Tracker
             </a>
             <div class="ms-auto d-flex gap-2">
-                <Link href="/loginPage" class="btn btn-outline-light">
+                <Link href="/login" class="btn btn-outline-light">
                     <i class="bi bi-box-arrow-in-right me-1"></i> Login
                 </Link>
                 <Link href="/registerPage" class="btn btn-outline-light">
@@ -28,7 +28,7 @@ import Footer from "@/Components/Footer.vue";
                     Manage clients, log work hours, monitor projects, and
                     generate reports — all in one place.
                 </p>
-                <Link href="/loginPage" class="btn btn-primary btn-lg mt-3">
+                <Link href="/login" class="btn btn-primary btn-lg mt-3">
                     <i class="bi bi-box-arrow-in-right me-1"></i> Get Started
                 </Link>
             </div>

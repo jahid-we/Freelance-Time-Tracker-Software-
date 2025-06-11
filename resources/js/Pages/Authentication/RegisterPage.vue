@@ -43,7 +43,7 @@ const handleRegister = async () => {
             nameError.value = "";
             emailError.value = "";
             passwordError.value = "";
-            setTimeout(() => router.visit("/loginPage"), 1000);
+            setTimeout(() => router.visit("/login"), 1000);
             alert("Registration successful.");
         }
     } catch (error) {
@@ -148,7 +148,7 @@ const goBack = () => window.history.back();
 
                             <div class="text-center mt-3">
                                 Already have an account?
-                                <Link href="/loginPage">Login</Link>
+                                <Link href="/login">Login</Link>
                             </div>
                         </form>
                     </div>

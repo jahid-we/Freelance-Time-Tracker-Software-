@@ -1,10 +1,11 @@
 <?php
 
-use App\Http\Controllers\Authentication\AuthController;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Clients\ClientController;
 use App\Http\Controllers\Projects\ProjectController;
 use App\Http\Controllers\TimeLogs\TimeLogController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Authentication\AuthController;
+use App\Http\Controllers\Pages\DashboardPageController;
 
 // ==================================================
 // API Route Definitions for Freelance Time Tracker
@@ -82,5 +83,15 @@ Route::middleware('auth:sanctum')->controller(TimeLogController::class)->group(f
 
     // Export PDF Route (generates a downloadable report)
     Route::get('/export-pdf', 'exportTimeLogs')->name('export-pdf');
+
+});
+
+
+// =====================================================
+// =============== DashBoard Page Routes ===============
+// =====================================================
+Route::middleware('auth:sanctum')->controller(DashboardPageController::class)->group(function () {
+
+    Route::get('/dashboard', 'dashboard')->name('dashboard');
 
 });

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Pages\AuthPageController;
 use App\Http\Controllers\pages\HomePageController;
+use App\Http\Controllers\Pages\DashboardPageController;
 
 // =====================================================
 // =============== Home Routes ===============
@@ -21,8 +22,10 @@ Route::middleware('guest')->controller(AuthPageController::class)->group(functio
 
 
     Route::get('/registerPage', 'registerPage')->name('registerPage');
-    Route::get('/loginPage', 'loginPage')->name('loginPage');
+    Route::get('/login', 'loginPage')->name('loginPage');
     Route::get('/reset-link', 'sendResetPasswordEmailPage')->name('sendResetPasswordEmailPage');
     Route::get('/reset-password/{token}', 'resetPasswordPage')->name('resetPasswordPage');
 
 });
+
+

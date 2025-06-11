@@ -28,7 +28,7 @@ const updatePassword = async () => {
 
         if (response.status === 200) {
             alert("Password updated successfully.");
-            setTimeout(() => router.visit("/loginPage"), 1000);
+            setTimeout(() => router.visit("/login"), 1000);
         }
     } catch (error) {
         console.error("Error updating password:", error);
@@ -89,7 +89,7 @@ const goBack = () => window.history.back();
 
                         <div class="text-center mt-4 mb-3">
                             Remembered your password?
-                            <Link href="/loginPage">Login</Link> <br />
+                            <Link href="/login">Login</Link> <br />
                         </div>
                     </div>
                 </div>
