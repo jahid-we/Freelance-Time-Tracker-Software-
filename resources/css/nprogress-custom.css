@@ -5,13 +5,13 @@
   }
 
   #nprogress .bar {
-    background: black !important;
+    background: #ffff !important;
     position: fixed;
     z-index: 1031;
     top: 0;
     left: 0;
     width: 100%;
-    height: 3px !important; /* Custom height */
+    height: 4px !important; /* Custom height */
   }
 
   #nprogress .peg {
@@ -20,7 +20,7 @@
     right: 0px;
     width: 100px;
     height: 100%;
-    box-shadow: 0 0 10px black, 0 0 5px black !important;
+    box-shadow: 0 0 10px #ffff, 0 0 5px #ffff !important;
     opacity: 1.0;
     -webkit-transform: rotate(3deg) translate(0px, -4px);
         -ms-transform: rotate(3deg) translate(0px, -4px);
@@ -40,8 +40,8 @@
     height: 18px;
     box-sizing: border-box;
     border: solid 2px transparent;
-    border-top-color: black !important;
-    border-left-color: black !important;
+    border-top-color: #ffff !important;
+    border-left-color: #ffff !important;
     border-radius: 50%;
     animation: nprogress-spinner 400ms linear infinite;
   }

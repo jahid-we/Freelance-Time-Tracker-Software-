@@ -1,13 +1,14 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Authentication\AuthController;
 use App\Http\Controllers\Clients\ClientController;
 use App\Http\Controllers\Pages\AuthPageController;
+use App\Http\Controllers\Pages\ClientPageController;
+use App\Http\Controllers\Pages\DashboardPageController;
 use App\Http\Controllers\pages\HomePageController;
 use App\Http\Controllers\Projects\ProjectController;
 use App\Http\Controllers\TimeLogs\TimeLogController;
-use App\Http\Controllers\Authentication\AuthController;
-use App\Http\Controllers\Pages\DashboardPageController;
+use Illuminate\Support\Facades\Route;
 
 // ==================================================
 // API Route Definitions for Freelance Time Tracker
@@ -89,9 +90,21 @@ Route::middleware('auth')->controller(TimeLogController::class)->group(function 
 // =====================================================
 // =============== Home Page Routes ===============
 // =====================================================
-Route::middleware('guest')->controller(HomePageController::class)->group(function () {
+Route::controller(HomePageController::class)->group(function () {
 
     Route::get('/', 'home')->name('home');
+
+});
+
+// =====================================================
+// =============== Authentication Page Routes ===============
+// =====================================================
+Route::middleware('guest')->controller(AuthPageController::class)->group(function () {
+
+    Route::get('/registerPage', 'registerPage')->name('registerPage');
+    Route::get('/login', 'loginPage')->name('loginPage');
+    Route::get('/reset-link', 'sendResetPasswordEmailPage')->name('sendResetPasswordEmailPage');
+    Route::get('/reset-password/{token}', 'resetPasswordPage')->name('resetPasswordPage');
 
 });
 
@@ -105,13 +118,10 @@ Route::middleware('auth')->controller(DashboardPageController::class)->group(fun
 });
 
 // =====================================================
-// =============== Authentication Page Routes ===============
+// =============== Client Page Routes ==================
 // =====================================================
-Route::middleware('guest')->controller(AuthPageController::class)->group(function () {
+Route::middleware('auth')->controller(ClientPageController::class)->group(function () { // Session based middleware
 
-    Route::get('/registerPage', 'registerPage')->name('registerPage');
-    Route::get('/login', 'loginPage')->name('loginPage');
-    Route::get('/reset-link', 'sendResetPasswordEmailPage')->name('sendResetPasswordEmailPage');
-    Route::get('/reset-password/{token}', 'resetPasswordPage')->name('resetPasswordPage');
+    Route::get('/client', 'client')->name('client');
 
 });
