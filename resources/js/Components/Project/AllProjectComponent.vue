@@ -7,6 +7,7 @@ import "vue3-easy-data-table/dist/style.css";
 import CreateProjectModal from "./CreateProjectModal.vue";
 import EditProjectModal from "./EditProjectModal.vue";
 import DeleteProjectModal from "./DeleteProjectModal.vue";
+import DeleteAllModal from "./DeleteAllModal.vue";
 
 const EasyDataTable = Vue3EasyDataTable;
 
@@ -27,6 +28,7 @@ const editProjectData = ref({
 const createProjectModalVisible = ref(false);
 const editProjectModalVisible = ref(false);
 const deleteProjectModalVisible = ref(false);
+const deleteAllModalVisible = ref(false);
 
 const headers= [
     {text:"Client Name", value:"client.name"},
@@ -81,6 +83,10 @@ const handleDelete = (id) => {
     deleteProjectModalVisible.value = true;
 };
 
+const handleDeleteAll = () => {
+    deleteAllModalVisible.value = true;
+};
+
 // Call on component mount
 onMounted(() => {
     fetchProjects();
@@ -102,7 +108,7 @@ onMounted(() => {
                 <i class="bi bi-person-plus-fill me-1"></i> Add New Projects
             </Button>
             <Button
-
+                @click.prevent="handleDeleteAll()"
                 class="btn hover-effect btn-outline-danger shadow-sm mb-3 mx-2"
             >
                 <i class="bi bi-trash"></i> Delete All Projects
@@ -176,6 +182,11 @@ onMounted(() => {
             :projectId="projectId"
             @cancel="deleteProjectModalVisible = false"
             @deleted="{ deleteProjectModalVisible = false; fetchProjects(); }"
+        />
+        <DeleteAllModal
+            :visible="deleteAllModalVisible"
+            @cancel="deleteAllModalVisible = false"
+            @deleted="{ deleteAllModalVisible = false; fetchProjects(); }"
         />
 
     </div>
