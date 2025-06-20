@@ -62,7 +62,7 @@ import Navbar from "../Components/DashBoardComp/Navbar.vue";
                             Start/end sessions or add manual logs.
                         </p>
                         <Link
-                            href="/timelogs"
+                            href="/timeLog"
                             class="btn hover-effect btn-warning btn-sm"
                             >View Time Logs</Link
                         >

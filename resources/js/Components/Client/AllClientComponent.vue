@@ -105,6 +105,24 @@ onMounted(() => {
                 <i class="bi bi-person-plus-fill me-1"></i> Add New Contact
             </Button>
             <Button
+
+                class="btn hover-effect btn-outline-success shadow-sm mb-3 mx-2"
+            >
+                <i class="bi bi-kanban"></i> Projects
+            </Button>
+            <Button
+
+                class="btn hover-effect btn-outline-warning shadow-sm mb-3 mx-2 "
+            >
+                <i class="bi bi-clock"></i> Time Logs
+            </Button>
+            <Button
+
+                class="btn hover-effect btn-outline-info shadow-sm mb-3 mx-2 "
+            >
+                <i class="bi bi-bar-chart-line"></i> Reports
+            </Button>
+            <Button
                 @click.prevent="handleDeleteALL()"
                 class="btn hover-effect btn-outline-danger shadow-sm mb-3 mx-2"
             >
