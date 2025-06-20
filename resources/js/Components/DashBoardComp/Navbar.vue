@@ -9,7 +9,7 @@ const handleLogout= async ()=>{
         const response = await axios.get('/logout');
         if (response.status === 200) {
         alert("Logged out successfully.");
-        setTimeout(() => router.visit("/login"), 1000);
+        setTimeout(() => router.visit("/"), 1000);
         }
     } catch (error) {
         console.error("Logout error:", error);

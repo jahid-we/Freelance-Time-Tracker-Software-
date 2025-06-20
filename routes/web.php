@@ -1,14 +1,15 @@
 <?php
 
-use App\Http\Controllers\Authentication\AuthController;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Clients\ClientController;
 use App\Http\Controllers\Pages\AuthPageController;
-use App\Http\Controllers\Pages\ClientPageController;
-use App\Http\Controllers\Pages\DashboardPageController;
 use App\Http\Controllers\pages\HomePageController;
+use App\Http\Controllers\Pages\ClientPageController;
 use App\Http\Controllers\Projects\ProjectController;
 use App\Http\Controllers\TimeLogs\TimeLogController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Pages\ProjectPageController;
+use App\Http\Controllers\Authentication\AuthController;
+use App\Http\Controllers\Pages\DashboardPageController;
 
 // ==================================================
 // API Route Definitions for Freelance Time Tracker
@@ -123,5 +124,14 @@ Route::middleware('auth')->controller(DashboardPageController::class)->group(fun
 Route::middleware('auth')->controller(ClientPageController::class)->group(function () { // Session based middleware
 
     Route::get('/client', 'client')->name('client');
+
+});
+
+// =====================================================
+// =============== Project Page Routes ==================
+// =====================================================
+Route::middleware('auth')->controller(ProjectPageController::class)->group(function () { // Session based middleware
+
+    Route::get('/project', 'project')->name('project');
 
 });

@@ -1,14 +1,13 @@
 <script setup>
 import Navbar from "../../Components/DashBoardComp/Navbar.vue";
 import Footer from "@/Components/Footer.vue";
-
-import ALlClientComponent from "../../Components/Client/AllClientComponent.vue";
+import AllProjectComponent from "../../Components/Project/AllProjectComponent.vue";
 </script>
 
 <template>
     <Navbar />
     <div class="min-vh-100">
-        <ALlClientComponent />
+        <AllProjectComponent />
     </div>
     <Footer />
 </template>

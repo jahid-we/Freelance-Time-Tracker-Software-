@@ -54,15 +54,15 @@ const handleCreate = async () => {
         </div>
         <div class="modal-body">
           <div class="row g-3">
-            <div class="col-md-6">
+            <div class="col-md-4">
               <label class="form-label">Name</label>
               <input v-model="client.name" type="text" placeholder="Name" class="form-control" />
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
               <label class="form-label">Email</label>
               <input v-model="client.email" type="email" placeholder="Email" class="form-control" />
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
               <label class="form-label">Contact Person</label>
               <input v-model="client.contact_person" type="text" placeholder="Phone" class="form-control" />
             </div>

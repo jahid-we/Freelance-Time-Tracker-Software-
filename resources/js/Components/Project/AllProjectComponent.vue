@@ -2,80 +2,66 @@
 import { ref, onMounted } from "vue";
 import axios from "axios";
 
-import CreateClientModal from "./CreateClientModal.vue";
-import DeleteAllModal from "./DeleteAllModal.vue";
-import DeleteClientModal from "./DeleteClientModal.vue";
-import EditClientModal from "./EditClientModal.vue";
-
 import Vue3EasyDataTable from "vue3-easy-data-table";
 import "vue3-easy-data-table/dist/style.css";
+import CreateProjectModal from "./CreateProjectModal.vue";
+import EditProjectModal from "./EditProjectModal.vue";
+import DeleteProjectModal from "./DeleteProjectModal.vue";
 
 const EasyDataTable = Vue3EasyDataTable;
 
-const clients = ref([]);
-const clientId=ref(null)
+const projects = ref([]);
+const projectId=ref(null)
 const search = ref("");
 const searchField = ref("");
-
-// Modal visibility states
-const createClientModalVisible = ref(false);
-const deleteAllModalVisible = ref(false);
-const deleteModalVisible = ref(false);
-const editModalVisible = ref(false);
-
-
-// Table headers
-const headers = [
-    { text: "Name", value: "name" },
-    { text: "Email", value: "email" },
-    { text: "Contact Person", value: "contact_person" },
-    { text: "Actions", value: "actions" },
-];
-
-// Edit Client Modal Data
-const editClientData = ref({
-    name: "",
-    email: "",
-    contact_person: "",
+const editProjectData = ref({
+    id: "",
+    client_id: "",
+    title: "",
+    description: "",
+    status: "",
+    deadline: ""
 });
 
-// Fetch clients from API
-const fetchClients = async () => {
+// Modal visibility states
+const createProjectModalVisible = ref(false);
+const editProjectModalVisible = ref(false);
+const deleteProjectModalVisible = ref(false);
+
+const headers= [
+    {text:"Client Name", value:"client.name"},
+    {text:"Title", value:"title"},
+    {text:"Description", value:"description"},
+    {text:"Deadline", value:"deadline"},
+    {text:"Status", value:"status"},
+    {text:"Actions", value:"actions"},
+];
+
+const fetchProjects = async () => {
     try {
-        const response = await axios.get("/get-clients");
-        clients.value = response.data.data;
+        const response = await axios.get("/get-all-projects");
+        projects.value = response.data.data;
     } catch (error) {
-        console.error("Error fetching clients:", error);
+        console.error("Error fetching Projects:", error);
     }
 };
 
 // Handle Create action
-const handleCreate =() => {
-    createClientModalVisible.value = true;
+const handleCreate = () => {
+    createProjectModalVisible.value = true;
 };
-const handleDeleteALL =() => {
-    deleteAllModalVisible.value = true;
-};
-const handleDelete = (id) => {
-    if (!id) {
-    alert("No valid id provided for deletion");
-    console.error("No valid id provided for deletion");
-    return;
-  }
-    clientId.value = id;
-    deleteModalVisible.value = true;
-};
+
 const handleEdit = async (id) => {
     if (!id) {
         alert("No valid id provided for editing");
         console.error("No valid id provided for editing");
         return;
     }
-    try{
-        const response =await axios.get(`/get-client/${id}`);
+      try{
+        const response =await axios.get(`/get-project/${id}`);
         if (response.status === 200) {
-            editClientData.value = response.data.data;
-            editModalVisible.value = true;
+            editProjectData.value = response.data.data;
+            editProjectModalVisible.value = true;
         } else {
             alert(response.data.data);
             console.error("Error fetching client data:", response.data.data);
@@ -85,30 +71,41 @@ const handleEdit = async (id) => {
     }
 };
 
+const handleDelete = (id) => {
+    if (!id) {
+    alert("No valid id provided for deletion");
+    console.error("No valid id provided for deletion");
+    return;
+  }
+    projectId.value = id;
+    deleteProjectModalVisible.value = true;
+};
+
 // Call on component mount
 onMounted(() => {
-    fetchClients();
+    fetchProjects();
 });
+
 </script>
 
 <template>
-    <div class="card  bg-primary-subtle border-primary m-5 pb-5 shadow">
-        <div class="card-header bg-primary text-center text-white">
-            <h5 class="mb-0">Client List</h5>
+<div class="card  bg-success-subtle border-success m-5 pb-5 shadow">
+        <div class="card-header bg-success text-center text-white">
+            <h5 class="mb-0">Project List</h5>
         </div>
 
         <div class="card-body">
             <Button
                 @click.prevent="handleCreate()"
-                class="btn hover-effect btn-outline-primary shadow-sm mb-3"
+                class="btn hover-effect btn-outline-success shadow-sm mb-3"
             >
-                <i class="bi bi-person-plus-fill me-1"></i> Add New Contact
+                <i class="bi bi-person-plus-fill me-1"></i> Add New Projects
             </Button>
             <Button
-                @click.prevent="handleDeleteALL()"
+
                 class="btn hover-effect btn-outline-danger shadow-sm mb-3 mx-2"
             >
-                <i class="bi bi-trash"></i> Delete All Clients
+                <i class="bi bi-trash"></i> Delete All Projects
             </Button>
             <div class="flex gap-3 mb-3">
                 <!-- Select Field to Search By -->
@@ -118,9 +115,11 @@ onMounted(() => {
                     style="max-width: 150px"
                 >
                     <option disabled value="">Default</option>
-                    <option value="email">Email</option>
-                    <option value="name">Name</option>
-                    <option value="contact_person">Contact Person</option>
+                    <option value="client.name">Client Name</option>
+                    <option value="title">Title</option>
+                    <option value="description">Description</option>
+                    <option value="deadline">Deadline</option>
+                    <option value="status">Status</option>
                 </select>
 
                 <!-- Search Input -->
@@ -134,7 +133,7 @@ onMounted(() => {
             <EasyDataTable
                 buttons-pagination
                 :headers="headers"
-                :items="clients"
+                :items="projects"
                 :search-value="search"
                 :search-field="searchField"
                 :items-per-page="5"
@@ -145,14 +144,14 @@ onMounted(() => {
                 <template #item-actions="{ id }">
                     <div class="d-flex justify-content-center gap-2">
                         <button
-                            class="btn btn-sm btn-outline-primary"
-                            @click="handleEdit(id)"
+                            class="btn btn-sm btn-outline-success"
+                            @click.prevent="handleEdit(id)"
                         >
                             <i class="bi bi-pencil"></i>
                         </button>
                         <button
                             class="btn btn-sm btn-outline-danger"
-                            @click="handleDelete(id)"
+                            @click.prevent="handleDelete(id)"
                         >
                             <i class="bi bi-trash"></i>
                         </button>
@@ -160,31 +159,25 @@ onMounted(() => {
                 </template>
             </EasyDataTable>
         </div>
-        <CreateClientModal
-            :visible="createClientModalVisible"
-            @cancel="createClientModalVisible = false"
-            @created="() => { createClientModalVisible = false; fetchClients(); }"
+
+        <CreateProjectModal
+            :visible="createProjectModalVisible"
+            @cancel="createProjectModalVisible = false"
+            @created="{ createProjectModalVisible = false; fetchProjects(); }"
+        />
+        <EditProjectModal
+            :visible="editProjectModalVisible"
+            :project="editProjectData"
+            @cancel="editProjectModalVisible = false"
+            @edited="{ editProjectModalVisible = false; fetchProjects(); }"
+        />
+        <DeleteProjectModal
+            :visible="deleteProjectModalVisible"
+            :projectId="projectId"
+            @cancel="deleteProjectModalVisible = false"
+            @deleted="{ deleteProjectModalVisible = false; fetchProjects(); }"
         />
 
-        <EditClientModal
-            :visible="editModalVisible"
-            :client="editClientData"
-            @cancel="editModalVisible = false"
-            @edited="() => { editModalVisible = false; fetchClients(); }"
-        />
-
-        <DeleteAllModal
-            :visible="deleteAllModalVisible"
-            @cancel="deleteAllModalVisible = false"
-            @deleted="() => { deleteAllModalVisible = false; fetchClients(); }"
-        />
-
-        <DeleteClientModal
-            :visible="deleteModalVisible"
-            :clientId="clientId"
-            @cancel="deleteModalVisible = false"
-            @deleted="() => { deleteModalVisible = false; fetchClients(); }"
-        />
     </div>
 </template>
 

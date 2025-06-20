@@ -4,40 +4,40 @@ import axios from "axios";
 
 const props = defineProps({
     visible: Boolean,
-    clientId: Number,
+    projectId: Number,
 });
 const emit = defineEmits(["cancel", "deleted"]);
 
-const newClientId = ref(null);
+const newProjectId = ref(null);
 const isDeleting = ref(false);
 
 watch(
-    () => props.clientId,
-    (newValue) => {
-        if (newValue) newClientId.value = newValue;
+    ()=> props.projectId,
+    (newValue) =>{
+        if (newValue) newProjectId.value = newValue;
     },
     { immediate: true }
 );
 
 const handleDelete = async () => {
-    if (!newClientId.value) {
-        alert("No valid client ID provided for deletion");
-        console.error("No valid client ID provided for deletion");
+    if (!newProjectId.value) {
+        alert("No valid project ID provided for deletion");
+        console.error("No valid project ID provided for deletion");
         return;
     }
 
     isDeleting.value = true;
     try {
-        const response = await axios.delete(`/delete-client/${newClientId.value}`);
+        const response = await axios.delete(`/delete-project/${newProjectId.value}`);
         if (response.status === 200) {
             emit("deleted");
-            alert("Client deleted successfully!");
+            alert("Project deleted successfully!");
         } else {
             alert(response.data.data);
-            console.error("Error deleting client:", response.data.data);
+            console.error("Error deleting project:", response.data.data);
         }
     } catch (error) {
-        console.error("Error deleting client:", error);
+        console.error("Error deleting project:", error);
     } finally {
         isDeleting.value = false;
     }
@@ -56,7 +56,7 @@ const handleDelete = async () => {
           <button type="button" class="btn-close" @click="$emit('cancel')"></button>
         </div>
         <div class="modal-body text-center">
-          <p class="mb-2">Do you really want to delete this Client?</p>
+          <p class="mb-2">Do you really want to delete this Project?</p>
           <p class="text-danger small"><i class="bi bi-info-circle me-1"></i>This action is permanent and cannot be undone.</p>
         </div>
         <div class="modal-footer border-top-0 justify-content-end">
