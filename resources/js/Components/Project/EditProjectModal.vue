@@ -48,7 +48,10 @@ const handleUpdate = async () => {
 
     isEditing.value = true;
     try {
-        const response = await axios.post(`/update-project/${newProjectData.value.id}`, newProjectData.value);
+        const response = await axios.post(
+            `/update-project/${newProjectData.value.id}`,
+            newProjectData.value
+        );
         if (response.status === 200) {
             emit("edited");
             alert("Project updated successfully!");
@@ -97,7 +100,7 @@ onMounted(() => {
                             >
                                 <option disabled value="">Default</option>
                                 <option
-                                    v-for=" client in clients"
+                                    v-for="client in clients"
                                     :key="client.id"
                                     :value="client.id"
                                 >

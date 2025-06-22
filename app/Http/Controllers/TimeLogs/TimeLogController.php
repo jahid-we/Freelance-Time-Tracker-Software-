@@ -50,6 +50,7 @@ class TimeLogController extends Controller
             }
 
             TimeLog::create([
+                'is_running' => true,
                 'user_id' => $userId,
                 'project_id' => $projectId,
                 'start_time' => now(),
@@ -80,6 +81,7 @@ class TimeLogController extends Controller
             }
             $timeLog->end_time = now();
             $timeLog->hours = $timeLog->start_time->floatDiffInHours($timeLog->end_time);
+            $timeLog->is_running = false;
             $timeLog->save();
 
             return ResponseHelper::Out(true, 'Time log stopped successfully', 200);

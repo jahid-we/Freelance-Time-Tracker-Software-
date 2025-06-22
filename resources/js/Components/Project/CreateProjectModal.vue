@@ -15,7 +15,7 @@ const project = ref({
     title: "",
     description: "",
     status: "active",
-    deadline: ""
+    deadline: "",
 });
 
 const isCreating = ref(false);
@@ -35,17 +35,20 @@ const handleCreate = async () => {
 
     try {
         // Validate project data
-        if (!project.value.client_id || !project.value.title || !project.value.description) {
+        if (
+            !project.value.client_id ||
+            !project.value.title ||
+            !project.value.description
+        ) {
             alert("Please fill in all fields.");
             isCreating.value = false;
             return;
         }
 
-
         const response = await axios.post("/create-project", project.value, {
             headers: {
-                "Content-Type": "application/json"
-            }
+                "Content-Type": "application/json",
+            },
         });
 
         if (response.status === 201) {
@@ -55,7 +58,7 @@ const handleCreate = async () => {
                 title: "",
                 description: "",
                 status: "active",
-                deadline: ""
+                deadline: "",
             };
             alert("Project created successfully!");
         } else {
@@ -65,7 +68,8 @@ const handleCreate = async () => {
     } catch (error) {
         console.error("Error creating project:", error?.response ?? error);
         if (error.response?.status === 422) {
-            const errors = error.response.data?.errors || error.response.data?.data;
+            const errors =
+                error.response.data?.errors || error.response.data?.data;
             const firstError = Object.values(errors)[0][0];
             alert(firstError);
         } else {

@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import axios from "axios";
+import { router } from "@inertiajs/vue3";
 
 import Vue3EasyDataTable from "vue3-easy-data-table";
 import "vue3-easy-data-table/dist/style.css";
@@ -8,11 +9,15 @@ import CreateProjectModal from "./CreateProjectModal.vue";
 import EditProjectModal from "./EditProjectModal.vue";
 import DeleteProjectModal from "./DeleteProjectModal.vue";
 import DeleteAllModal from "./DeleteAllModal.vue";
+import TimeLogModal from "./TimeLogModal.vue";
 
 const EasyDataTable = Vue3EasyDataTable;
 
 const projects = ref([]);
-const projectId=ref(null)
+const timeLogs = ref([]);
+const activeLogs = ref({});
+const projectId = ref(null);
+const timeLogProjectId = ref(null);
 const search = ref("");
 const searchField = ref("");
 const editProjectData = ref({
@@ -21,22 +26,22 @@ const editProjectData = ref({
     title: "",
     description: "",
     status: "",
-    deadline: ""
+    deadline: "",
 });
 
-// Modal visibility states
 const createProjectModalVisible = ref(false);
 const editProjectModalVisible = ref(false);
 const deleteProjectModalVisible = ref(false);
 const deleteAllModalVisible = ref(false);
+const timeLogModalVisible = ref(false);
 
-const headers= [
-    {text:"Client Name", value:"client.name"},
-    {text:"Title", value:"title"},
-    {text:"Description", value:"description"},
-    {text:"Deadline", value:"deadline"},
-    {text:"Status", value:"status"},
-    {text:"Actions", value:"actions"},
+const headers = [
+    { text: "Client Name", value: "client.name" },
+    { text: "Title", value: "title" },
+    { text: "Description", value: "description" },
+    { text: "Deadline", value: "deadline" },
+    { text: "Status", value: "status" },
+    { text: "Actions", value: "actions", sortable: false, width: 200 },
 ];
 
 const fetchProjects = async () => {
@@ -48,37 +53,65 @@ const fetchProjects = async () => {
     }
 };
 
-// Handle Create action
+const fetchTimeLogs = async () => {
+    try {
+        const response = await axios.get("/get-timelogs");
+        timeLogs.value = response.data.data;
+        activeLogs.value = {};
+
+        timeLogs.value.forEach((log) => {
+            if (log.is_running === 1) {
+                activeLogs.value[log.project_id] = true;
+            }
+        });
+    } catch (error) {
+        console.error("Error fetching Time Logs:", error);
+    }
+};
+
+const startTimeLog = async (id) => {
+    if (!id) {
+        alert("Invalid project ID");
+        return;
+    }
+    timeLogProjectId.value = id;
+    timeLogModalVisible.value = true;
+};
+
+const stopTimeLog = async (id) => {
+    try {
+        const response = await axios.post(`end-timelog/${id}`);
+        if (response.status === 200) {
+            alert("Time log stopped Successfully!");
+            await fetchTimeLogs();
+            await fetchProjects();
+        }
+    } catch (error) {
+        console.error("Stop error", error);
+    }
+};
+
 const handleCreate = () => {
     createProjectModalVisible.value = true;
 };
 
 const handleEdit = async (id) => {
-    if (!id) {
-        alert("No valid id provided for editing");
-        console.error("No valid id provided for editing");
-        return;
-    }
-      try{
-        const response =await axios.get(`/get-project/${id}`);
+    if (!id) return;
+    try {
+        const response = await axios.get(`/get-project/${id}`);
         if (response.status === 200) {
             editProjectData.value = response.data.data;
             editProjectModalVisible.value = true;
         } else {
             alert(response.data.data);
-            console.error("Error fetching client data:", response.data.data);
         }
-    }catch (error) {
+    } catch (error) {
         console.error("Error handling edit:", error);
     }
 };
 
 const handleDelete = (id) => {
-    if (!id) {
-    alert("No valid id provided for deletion");
-    console.error("No valid id provided for deletion");
-    return;
-  }
+    if (!id) return;
     projectId.value = id;
     deleteProjectModalVisible.value = true;
 };
@@ -87,34 +120,56 @@ const handleDeleteAll = () => {
     deleteAllModalVisible.value = true;
 };
 
-// Call on component mount
+const handleClients = () => {
+    router.visit("/client");
+};
+
+const handleTimeLogs = () => {
+    router.visit("/timeLog");
+};
+
 onMounted(() => {
+    fetchTimeLogs();
     fetchProjects();
 });
-
 </script>
 
 <template>
-<div class="card  bg-success-subtle border-success m-5 pb-5 shadow">
-        <div class="card-header bg-success text-center text-white">
-            <h5 class="mb-0">Project List</h5>
+    <div class="card bg-success-subtle border-success m-5 pb-5 shadow">
+        <div class="card-header bg-success text-white p-0">
+            <h5 class="mb-0 py-3 text-center w-100">Project List</h5>
         </div>
 
         <div class="card-body">
             <Button
                 @click.prevent="handleCreate()"
-                class="btn hover-effect btn-outline-success shadow-sm mb-3"
+                class="btn hover-effect btn-success shadow mb-3"
             >
-                <i class="bi bi-person-plus-fill me-1"></i> Add New Projects
+                <i class="bi bi-kanban"></i> Add New Projects
+            </Button>
+            <Button
+                @click.prevent="handleClients()"
+                class="btn hover-effect btn-primary shadow mb-3 mx-2"
+            >
+                <i class="bi bi-people-fill"></i> Clients
+            </Button>
+            <Button
+                @click.prevent="handleTimeLogs()"
+                class="btn hover-effect btn-warning shadow mb-3 mx-2"
+            >
+                <i class="bi bi-clock"></i> Time Logs
+            </Button>
+            <Button class="btn hover-effect btn-info shadow mb-3 mx-2">
+                <i class="bi bi-bar-chart-line"></i> Reports
             </Button>
             <Button
                 @click.prevent="handleDeleteAll()"
-                class="btn hover-effect btn-outline-danger shadow-sm mb-3 mx-2"
+                class="btn hover-effect btn-danger shadow mb-3 mx-2"
             >
                 <i class="bi bi-trash"></i> Delete All Projects
             </Button>
+
             <div class="flex gap-3 mb-3">
-                <!-- Select Field to Search By -->
                 <select
                     v-model="searchField"
                     class="form-select stylish-input mb-3"
@@ -127,8 +182,6 @@ onMounted(() => {
                     <option value="deadline">Deadline</option>
                     <option value="status">Status</option>
                 </select>
-
-                <!-- Search Input -->
                 <input
                     v-model="search"
                     type="text"
@@ -136,6 +189,7 @@ onMounted(() => {
                     class="form-control stylish-input"
                 />
             </div>
+
             <EasyDataTable
                 buttons-pagination
                 :headers="headers"
@@ -148,7 +202,9 @@ onMounted(() => {
                 table-class-name="custom-table"
             >
                 <template #item-actions="{ id }">
-                    <div class="d-flex justify-content-center gap-2">
+                    <div
+                        class="d-flex justify-content-center align-items-center flex-wrap gap-1"
+                    >
                         <button
                             class="btn btn-sm btn-outline-success"
                             @click.prevent="handleEdit(id)"
@@ -161,6 +217,20 @@ onMounted(() => {
                         >
                             <i class="bi bi-trash"></i>
                         </button>
+                        <button
+                            v-if="!activeLogs[id]"
+                            class="btn btn-sm btn-outline-primary"
+                            @click.prevent="startTimeLog(id)"
+                        >
+                            <i class="bi bi-play-fill"></i> Start
+                        </button>
+                        <button
+                            v-if="activeLogs[id]"
+                            class="btn btn-sm btn-outline-danger"
+                            @click.prevent="stopTimeLog(id)"
+                        >
+                            <i class="bi bi-stop-fill"></i> Stop
+                        </button>
                     </div>
                 </template>
             </EasyDataTable>
@@ -169,26 +239,57 @@ onMounted(() => {
         <CreateProjectModal
             :visible="createProjectModalVisible"
             @cancel="createProjectModalVisible = false"
-            @created="{ createProjectModalVisible = false; fetchProjects(); }"
+            @created="
+                {
+                    createProjectModalVisible = false;
+                    fetchProjects();
+                }
+            "
         />
         <EditProjectModal
             :visible="editProjectModalVisible"
             :project="editProjectData"
             @cancel="editProjectModalVisible = false"
-            @edited="{ editProjectModalVisible = false; fetchProjects(); }"
+            @edited="
+                {
+                    editProjectModalVisible = false;
+                    fetchProjects();
+                }
+            "
         />
         <DeleteProjectModal
             :visible="deleteProjectModalVisible"
             :projectId="projectId"
             @cancel="deleteProjectModalVisible = false"
-            @deleted="{ deleteProjectModalVisible = false; fetchProjects(); }"
+            @deleted="
+                {
+                    deleteProjectModalVisible = false;
+                    fetchProjects();
+                }
+            "
         />
         <DeleteAllModal
             :visible="deleteAllModalVisible"
             @cancel="deleteAllModalVisible = false"
-            @deleted="{ deleteAllModalVisible = false; fetchProjects(); }"
+            @deleted="
+                {
+                    deleteAllModalVisible = false;
+                    fetchProjects();
+                }
+            "
         />
-
+        <TimeLogModal
+            :visible="timeLogModalVisible"
+            :projectId="timeLogProjectId"
+            @cancel="timeLogModalVisible = false"
+            @created="
+                {
+                    timeLogModalVisible = false;
+                    fetchTimeLogs();
+                    fetchProjects();
+                }
+            "
+        />
     </div>
 </template>
 
@@ -227,6 +328,12 @@ onMounted(() => {
     text-align: center;
 }
 
+.custom-table thead th:last-child,
+.custom-table tbody td:last-child {
+    text-align: center !important;
+    vertical-align: middle;
+}
+
 .custom-table tbody tr:hover {
     background-color: #f1f1f1;
     cursor: pointer;
@@ -242,11 +349,13 @@ onMounted(() => {
 }
 
 .d-flex.gap-2 {
-    gap: 6px; /* ensures consistent spacing */
+    gap: 6px;
 }
+
 .hover-effect {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
 .hover-effect:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);

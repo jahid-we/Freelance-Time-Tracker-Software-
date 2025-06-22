@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class TimeLog extends Model
 {
     protected $fillable = [
+        'is_running',
         'user_id',
         'project_id',
         'start_time',
