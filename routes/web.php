@@ -12,6 +12,7 @@ use App\Http\Controllers\Pages\ProjectPageController;
 use App\Http\Controllers\Pages\TimeLogPageController;
 use App\Http\Controllers\Authentication\AuthController;
 use App\Http\Controllers\Pages\DashboardPageController;
+use App\Http\Controllers\UserProfile\UserProfileController;
 
 // ==================================================
 // API Route Definitions for Freelance Time Tracker
@@ -30,17 +31,29 @@ Route::middleware('guest')->controller(AuthController::class)->group(function ()
 
 });
 
+
 // =====================================================
 // =============== Protected Auth Routes ===============
 // =====================================================
-Route::middleware('auth')->controller(AuthController::class)->group(function () { // Session based middleware
+Route::middleware('auth')->controller(AuthController::class)->group(function () {
     Route::get('/logout', 'logout')->name('logout');
+});
+
+// =====================================================
+// =============== User Profile Routes =================
+// =====================================================
+Route::middleware('auth')->controller(UserProfileController::class)->group(function () {
+
+    Route::get('/get-user-profile', 'getUserProfile')->name('get-user-profile');
+    Route::post('/update-user-profile', 'updateUserProfile')->name('update-user-profile');
+    Route::post('/update-user-password', 'updateUserPassword')->name('update-user-password');
+
 });
 
 // =====================================================
 // =============== Client Routes =======================
 // =====================================================
-Route::middleware('auth')->controller(ClientController::class)->group(function () { // Session based middleware
+Route::middleware('auth')->controller(ClientController::class)->group(function () {
 
     Route::post('/create-client', 'createClient')->name('create-client');
     Route::get('/get-clients', 'getClients')->name('get-clients');
@@ -54,7 +67,7 @@ Route::middleware('auth')->controller(ClientController::class)->group(function (
 // =====================================================
 // =============== Project Routes ======================
 // =====================================================
-Route::middleware('auth')->controller(ProjectController::class)->group(function () { // Session based middleware
+Route::middleware('auth')->controller(ProjectController::class)->group(function () {
 
     Route::post('/create-project', 'createProject')->name('create-project');
     Route::get('/get-all-projects', 'getAllProjects')->name('get-all-projects');
@@ -69,7 +82,7 @@ Route::middleware('auth')->controller(ProjectController::class)->group(function 
 // =====================================================
 // =============== Time Log Related Routes =============
 // =====================================================
-Route::middleware('auth')->controller(TimeLogController::class)->group(function () { // Session based middleware
+Route::middleware('auth')->controller(TimeLogController::class)->group(function () {
 
     Route::post('/start-timelog/{projectId}', 'start')->name('start-timelog');
     Route::post('/end-timelog/{projectId}', 'end')->name('end-timelog');
@@ -114,7 +127,7 @@ Route::middleware('guest')->controller(AuthPageController::class)->group(functio
 // =====================================================
 // =============== DashBoard Page Routes ===============
 // =====================================================
-Route::middleware('auth')->controller(DashboardPageController::class)->group(function () { // Session based middleware
+Route::middleware('auth')->controller(DashboardPageController::class)->group(function () {
 
     Route::get('/dashboard', 'dashboard')->name('dashboard');
 
@@ -123,7 +136,7 @@ Route::middleware('auth')->controller(DashboardPageController::class)->group(fun
 // =====================================================
 // =============== Client Page Routes ==================
 // =====================================================
-Route::middleware('auth')->controller(ClientPageController::class)->group(function () { // Session based middleware
+Route::middleware('auth')->controller(ClientPageController::class)->group(function () {
 
     Route::get('/client', 'client')->name('client');
 
@@ -132,7 +145,7 @@ Route::middleware('auth')->controller(ClientPageController::class)->group(functi
 // =====================================================
 // =============== Project Page Routes ==================
 // =====================================================
-Route::middleware('auth')->controller(ProjectPageController::class)->group(function () { // Session based middleware
+Route::middleware('auth')->controller(ProjectPageController::class)->group(function () {
 
     Route::get('/project', 'project')->name('project');
 
@@ -140,7 +153,7 @@ Route::middleware('auth')->controller(ProjectPageController::class)->group(funct
 // =====================================================
 // =============== Time Log Page Routes ==================
 // =====================================================
-Route::middleware('auth')->controller(TimeLogPageController::class)->group(function () { // Session based middleware
+Route::middleware('auth')->controller(TimeLogPageController::class)->group(function () {
 
     Route::get('/timeLog', 'timeLog')->name('timeLog');
 
@@ -148,7 +161,7 @@ Route::middleware('auth')->controller(TimeLogPageController::class)->group(funct
 // =====================================================
 // =============== Report Page Routes ==================
 // =====================================================
-Route::middleware('auth')->controller(ReportPageController::class)->group(function () { // Session based middleware
+Route::middleware('auth')->controller(ReportPageController::class)->group(function () {
 
     Route::get('/report', 'report')->name('report');
 
