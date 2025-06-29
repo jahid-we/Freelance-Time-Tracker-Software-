@@ -80,7 +80,7 @@ import Navbar from "../Components/DashBoardComp/Navbar.vue";
                             See summaries by project, client, or day.
                         </p>
                         <Link
-                            href="/reports"
+                            href="/report"
                             class="btn hover-effect btn-info btn-sm"
                             >View Reports</Link
                         >

@@ -5,6 +5,7 @@ use App\Http\Controllers\Clients\ClientController;
 use App\Http\Controllers\Pages\AuthPageController;
 use App\Http\Controllers\pages\HomePageController;
 use App\Http\Controllers\Pages\ClientPageController;
+use App\Http\Controllers\Pages\ReportPageController;
 use App\Http\Controllers\Projects\ProjectController;
 use App\Http\Controllers\TimeLogs\TimeLogController;
 use App\Http\Controllers\Pages\ProjectPageController;
@@ -142,5 +143,13 @@ Route::middleware('auth')->controller(ProjectPageController::class)->group(funct
 Route::middleware('auth')->controller(TimeLogPageController::class)->group(function () { // Session based middleware
 
     Route::get('/timeLog', 'timeLog')->name('timeLog');
+
+});
+// =====================================================
+// =============== Report Page Routes ==================
+// =====================================================
+Route::middleware('auth')->controller(ReportPageController::class)->group(function () { // Session based middleware
+
+    Route::get('/report', 'report')->name('report');
 
 });

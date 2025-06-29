@@ -13,7 +13,7 @@ const newProjectId = ref(null);
 const isCreating = ref(false);
 const form = ref({
     description: "",
-    billable: "billable", // Default to billable
+    tags: "billable", // Default to billable
 });
 
 watch(
@@ -29,7 +29,7 @@ const handleCreate = async () => {
 
     try {
         // Validate form data
-        if (!form.value.description || !form.value.billable) {
+        if (!form.value.description || !form.value.tags) {
             alert("Please fill in all fields.");
             isCreating.value = false;
             return;
@@ -43,7 +43,7 @@ const handleCreate = async () => {
         if (response.status === 201) {
             emit("created");
             form.value.description = "";
-            form.value.billable = "billable"; // Reset to default
+            form.value.tags = "billable"; // Reset to default
             alert("Time log created successfully!");
         } else {
             alert(response.data.data);
@@ -93,7 +93,7 @@ const handleCreate = async () => {
                                 >Billable/Non-Billable</label
                             >
                             <select
-                                v-model="form.billable"
+                                v-model="form.tags"
                                 class="form-select stylish-input mb-3"
                             >
                                 <option value="billable">Billable</option>

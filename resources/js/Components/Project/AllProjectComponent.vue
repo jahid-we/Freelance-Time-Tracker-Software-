@@ -1,6 +1,8 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import axios from "axios";
+import dayjs from "dayjs";
+
 import { router } from "@inertiajs/vue3";
 
 import Vue3EasyDataTable from "vue3-easy-data-table";
@@ -128,6 +130,9 @@ const handleTimeLogs = () => {
     router.visit("/timeLog");
 };
 
+const handleReports = () => {
+    router.visit("/report");
+};
 onMounted(() => {
     fetchTimeLogs();
     fetchProjects();
@@ -135,38 +140,53 @@ onMounted(() => {
 </script>
 
 <template>
+    <div class="container mt-5 d-flex justify-content-center">
+        <div class="col-md-8">
+            <div
+                class="alert alert-success text-center shadow-sm mb-2 shadow"
+                role="alert"
+            >
+                📢 <strong>NOTE:</strong> This table lists all
+                active and archived projects. You can search by <em>title</em>,
+                <em>client name</em>, <em>status</em>, or <em>deadline</em>.
+            </div>
+        </div>
+    </div>
     <div class="card bg-success-subtle border-success m-5 pb-5 shadow">
         <div class="card-header bg-success text-white p-0">
-            <h5 class="mb-0 py-3 text-center w-100">Project List</h5>
+            <h5 class="mb-0 py-3 text-center w-100">📒 Project List</h5>
         </div>
 
         <div class="card-body">
             <Button
                 @click.prevent="handleCreate()"
-                class="btn hover-effect btn-success shadow mb-3"
+                class="btn hover-effect btn-success shadow me-3 mb-3 "
             >
                 <i class="bi bi-kanban"></i> Add New Projects
             </Button>
             <Button
                 @click.prevent="handleClients()"
-                class="btn hover-effect btn-primary shadow mb-3 mx-2"
+                class="btn hover-effect btn-primary shadow mb-3 me-3"
             >
                 <i class="bi bi-people-fill"></i> Clients
             </Button>
             <Button
                 @click.prevent="handleTimeLogs()"
-                class="btn hover-effect btn-warning shadow mb-3 mx-2"
+                class="btn hover-effect btn-warning shadow mb-3 me-3"
             >
                 <i class="bi bi-clock"></i> Time Logs
             </Button>
-            <Button class="btn hover-effect btn-info shadow mb-3 mx-2">
+            <Button @click.prevent="handleReports()" class="btn hover-effect btn-info shadow mb-3 me-3">
                 <i class="bi bi-bar-chart-line"></i> Reports
             </Button>
             <Button
                 @click.prevent="handleDeleteAll()"
-                class="btn hover-effect btn-danger shadow mb-3 mx-2"
+                class="btn hover-effect btn-danger shadow mb-3 me-3"
             >
                 <i class="bi bi-trash"></i> Delete All Projects
+            </Button>
+            <Button class="btn disabled hover-effect btn-success shadow me-3 mb-3">
+                <i class="bi bi-kanban"></i> Projects
             </Button>
 
             <div class="flex gap-3 mb-3">
@@ -194,6 +214,11 @@ onMounted(() => {
                 buttons-pagination
                 :headers="headers"
                 :items="projects"
+                table-class="table table-bordered"
+                header-text-direction="left"
+                body-text-direction="left"
+                alternating
+                theme-color="#0d6efd"
                 :search-value="search"
                 :search-field="searchField"
                 :items-per-page="5"
@@ -201,6 +226,9 @@ onMounted(() => {
                 show-index
                 table-class-name="custom-table"
             >
+                <template #item-deadline="{ deadline }">
+                    {{ dayjs(deadline).format("MMM D, YYYY h:mm A") }}
+                </template>
                 <template #item-actions="{ id }">
                     <div
                         class="d-flex justify-content-center align-items-center flex-wrap gap-1"

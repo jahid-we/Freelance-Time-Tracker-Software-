@@ -144,7 +144,7 @@ class TimeLogController extends Controller
     {
         try {
             $userId = auth()->id();
-            $timeLogs = TimeLog::where('user_id', $userId)->with('project')->get();
+            $timeLogs = TimeLog::where('user_id', $userId)->with('project.client')->get();
 
             return ResponseHelper::Out(true, $timeLogs, 200);
         } catch (Exception $e) {
@@ -292,9 +292,18 @@ class TimeLogController extends Controller
                 $query->whereBetween('start_time', [$from, $to]);
             }
 
-            $totalHours = $query->sum('hours');
+            $totalFloatHours = $query->sum('hours');
+            $totalMinutes = (int) round($totalFloatHours * 60);
 
-            return ResponseHelper::Out(true, $totalHours, 200);
+            $hours = floor($totalMinutes / 60);
+            $minutes = $totalMinutes % 60;
+
+            return ResponseHelper::Out(true, [
+                'total_hours' => $hours,
+                'total_minutes' => $minutes,
+                'formatted' => "$hours hours and $minutes minutes",
+                'raw' => $totalFloatHours,
+            ], 200);
 
         } catch (Exception $e) {
             return ResponseHelper::Out(false, 'Failed to search time logs', 500);

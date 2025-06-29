@@ -19,12 +19,12 @@ const handleLogout= async ()=>{
 </script>
 
 <template>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3 sticky-top ">
     <Link class="navbar-brand" href="/">
       <i class="bi bi-clock-history me-2"></i>Time Tracker
     </Link>
     <div class="ms-auto d-flex">
-      <span class="navbar-text me-3">Hi, {{ user?.name ?? 'Freelancer'}}</span>
+      <span class="navbar-text me-3">Hi, {{ user?.name ?? 'Freelancer'}}👋</span>
       <button class="btn btn-outline-light btn-sm" @click.prevent="handleLogout()"><i class="bi bi-box-arrow-right"></i> Logout</button>
     </div>
   </nav>

@@ -24,7 +24,7 @@ import Footer from "@/Components/Footer.vue";
                 </Link>
                 <div class="ms-auto d-flex">
                     <span v-if="loggedIn" class="navbar-text me-3"
-                        >Hi, {{ user?.name ?? "Freelancer" }}</span
+                        >Hi, {{ user?.name ?? "Freelancer" }}👋</span
                     >
                     <Link
                         v-if="loggedIn"
