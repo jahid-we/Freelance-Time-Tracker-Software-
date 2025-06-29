@@ -99,40 +99,40 @@ onMounted(() => {
         </div>
 
         <div class="card-body">
-            <!-- Action Buttons -->
-            <Button
+            <!-- Action buttons -->
+            <button
                 @click.prevent="handleCreate()"
                 class="btn hover-effect btn-primary shadow mb-3 me-3"
             >
                 <i class="bi bi-person-plus-fill me-1"></i> Add New Contact
-            </Button>
-            <Button
+            </button>
+            <button
                 @click.prevent="projectPage()"
                 class="btn hover-effect btn-success shadow mb-3 me-3"
             >
                 <i class="bi bi-kanban"></i> Projects
-            </Button>
-            <Button
+            </button>
+            <button
                 @click.prevent="timeLogPage()"
                 class="btn hover-effect btn-warning shadow mb-3 me-3"
             >
                 <i class="bi bi-clock"></i> Time Logs
-            </Button>
-            <Button
+            </button>
+            <button
                 @click.prevent="reportPage()"
                 class="btn hover-effect btn-info shadow mb-3 me-3"
             >
                 <i class="bi bi-bar-chart-line"></i> Reports
-            </Button>
-            <Button
+            </button>
+            <button
                 @click.prevent="handleDeleteALL()"
                 class="btn hover-effect btn-danger shadow mb-3 me-3"
             >
                 <i class="bi bi-trash"></i> Delete All Clients
-            </Button>
-            <Button class="btn disabled hover-effect btn-primary shadow me-3 mb-3">
+            </button>
+            <button class="btn disabled hover-effect btn-primary shadow me-3 mb-3">
                 <i class="bi bi-people-fill"></i> Clients
-            </Button>
+            </button>
 
             <!-- Filters -->
             <div class="flex gap-3 mb-3">

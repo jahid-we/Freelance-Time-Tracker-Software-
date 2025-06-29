@@ -94,28 +94,28 @@ onMounted(() => {
         </div>
     </div>
     <div class="container mt-5">
-        <!-- Navigation Buttons -->
-        <Button
+        <!-- Navigation buttons -->
+        <button
             @click.prevent="clientPage()"
             class="btn hover-effect btn-primary shadow me-3 mb-3"
         >
             <i class="bi bi-people-fill"></i> Clients
-        </Button>
-        <Button
+        </button>
+        <button
             @click.prevent="projectPage()"
             class="btn hover-effect btn-success shadow mb-3 me-3"
         >
             <i class="bi bi-kanban"></i> Projects
-        </Button>
-        <Button
+        </button>
+        <button
             @click.prevent="timeLogPage()"
             class="btn hover-effect btn-warning shadow mb-3 me-3"
         >
             <i class="bi bi-clock"></i> Time Logs
-        </Button>
-        <Button disabled class="btn hover-effect btn-info shadow mb-3 me-3">
+        </button>
+        <button disabled class="btn hover-effect btn-info shadow mb-3 me-3">
             <i class="bi bi-bar-chart-line"></i> Reports
-        </Button>
+        </button>
 
         <!-- Filter Card -->
         <div class="card shadow-lg border-0 rounded-3 mb-4">

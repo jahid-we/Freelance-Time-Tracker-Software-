@@ -158,36 +158,36 @@ onMounted(() => {
         </div>
 
         <div class="card-body">
-            <Button
+            <button
                 @click.prevent="handleCreate()"
                 class="btn hover-effect btn-success shadow me-3 mb-3 "
             >
                 <i class="bi bi-kanban"></i> Add New Projects
-            </Button>
-            <Button
+            </button>
+            <button
                 @click.prevent="handleClients()"
                 class="btn hover-effect btn-primary shadow mb-3 me-3"
             >
                 <i class="bi bi-people-fill"></i> Clients
-            </Button>
-            <Button
+            </button>
+            <button
                 @click.prevent="handleTimeLogs()"
                 class="btn hover-effect btn-warning shadow mb-3 me-3"
             >
                 <i class="bi bi-clock"></i> Time Logs
-            </Button>
-            <Button @click.prevent="handleReports()" class="btn hover-effect btn-info shadow mb-3 me-3">
+            </button>
+            <button @click.prevent="handleReports()" class="btn hover-effect btn-info shadow mb-3 me-3">
                 <i class="bi bi-bar-chart-line"></i> Reports
-            </Button>
-            <Button
+            </button>
+            <button
                 @click.prevent="handleDeleteAll()"
                 class="btn hover-effect btn-danger shadow mb-3 me-3"
             >
                 <i class="bi bi-trash"></i> Delete All Projects
-            </Button>
-            <Button class="btn disabled hover-effect btn-success shadow me-3 mb-3">
+            </button>
+            <button class="btn disabled hover-effect btn-success shadow me-3 mb-3">
                 <i class="bi bi-kanban"></i> Projects
-            </Button>
+            </button>
 
             <div class="flex gap-3 mb-3">
                 <select

@@ -110,37 +110,37 @@ onMounted(() => {
         </div>
 
         <div class="card-body">
-            <!-- Action Buttons -->
-            <Button
+            <!-- Action buttons -->
+            <button
                 @click.prevent="handleCreateModal()"
                 class="btn hover-effect btn-primary shadow mb-3 "
             >
                 <i class="bi bi-clock"></i> Manually Add Time Log
-            </Button>
-            <Button
+            </button>
+            <button
                 @click.prevent="clientPage()"
                 class="btn hover-effect btn-primary shadow mb-3 mx-2"
             >
                 <i class="bi bi-people-fill"></i> Clients
-            </Button>
-            <Button
+            </button>
+            <button
                 @click.prevent="projectPage()"
                 class="btn hover-effect btn-success shadow mb-3 mx-2"
             >
                 <i class="bi bi-kanban"></i> Projects
-            </Button>
-            <Button @click.prevent="reportPage()" class="btn hover-effect btn-info shadow mb-3 mx-2">
+            </button>
+            <button @click.prevent="reportPage()" class="btn hover-effect btn-info shadow mb-3 mx-2">
                 <i class="bi bi-bar-chart-line"></i> Reports
-            </Button>
-            <Button
+            </button>
+            <button
                 @click.prevent="handleDeleteAllModal()"
                 class="btn hover-effect btn-danger shadow mb-3 mx-2"
             >
                 <i class="bi bi-trash"></i> Delete All Time Logs
-            </Button>
-            <Button class="btn disabled hover-effect btn-warning shadow mx-2 mb-3">
+            </button>
+            <button class="btn disabled hover-effect btn-warning shadow mx-2 mb-3">
                 <i class="bi bi-clock"></i> Time Logs
-            </Button>
+            </button>
 
             <!-- Filters -->
             <div class="flex gap-3 mb-3">
