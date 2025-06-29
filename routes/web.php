@@ -83,7 +83,7 @@ Route::middleware('auth')->controller(TimeLogController::class)->group(function 
     Route::delete('/delete-all-timelogs', 'deleteAll')->name('delete-all-timelogs');
 
     // Report Route (search or filter time logs)
-    Route::get('/report', 'search')->name('timelog.search');
+    Route::get('/search', 'search')->name('timelog.search');
 
     // Export PDF Route (generates a downloadable report)
     Route::get('/export-pdf', 'exportTimeLogs')->name('export-pdf');

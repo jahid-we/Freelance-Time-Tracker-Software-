@@ -56,7 +56,7 @@ const fetchLogs = async () => {
     if (project_id.value) params.project_id = project_id.value;
 
     try {
-        const response = await axios.get("/report", { params });
+        const response = await axios.get("/search", { params });
 
         if (response.data.success) {
             totalHours.value = response.data.data.formatted;
