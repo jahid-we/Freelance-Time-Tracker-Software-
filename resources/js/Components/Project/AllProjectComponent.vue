@@ -143,7 +143,7 @@ onMounted(() => {
     <div class="container mt-5 d-flex justify-content-center">
         <div class="col-md-8">
             <div
-                class="alert alert-success text-center shadow-sm mb-2 shadow"
+                class="alert alert-success text-center shadow mb-2"
                 role="alert"
             >
                 📢 <strong>NOTE:</strong> This table lists all

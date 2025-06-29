@@ -85,7 +85,7 @@ onMounted(() => {
     <div class="container mt-5 d-flex justify-content-center">
         <div class="col-md-8">
             <div
-                class="alert alert-info text-center shadow-sm mb-2 shadow"
+                class="alert alert-info text-center mb-2 shadow"
                 role="alert"
             >
                 📢 <strong>NOTE:</strong> Use the options below to generate and
@@ -118,7 +118,7 @@ onMounted(() => {
         </button>
 
         <!-- Filter Card -->
-        <div class="card shadow-lg border-0 rounded-3 mb-4">
+        <div class="card bg-info-subtle border border-info shadow-lg rounded-3 mb-4">
             <div class="card-header bg-info text-white">
                 <h5 class="mb-0 py-3 text-center w-100">
                     Get PDF Of Time Logs

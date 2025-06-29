@@ -94,7 +94,7 @@ onMounted(() => {
     <div class="container mt-5 d-flex justify-content-center">
         <div class="col-md-8">
             <div
-                class="alert alert-warning text-center shadow-sm mb-4"
+                class="alert alert-warning text-center shadow mb-4"
                 role="alert"
             >
                 📢 <strong>NOTE:</strong> This table shows all

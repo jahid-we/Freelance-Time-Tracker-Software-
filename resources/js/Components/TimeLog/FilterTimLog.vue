@@ -92,7 +92,7 @@ onMounted(() => {
 <template>
     <div class="container mt-5">
         <!-- Filter Form -->
-        <div class="card shadow-lg border-0 rounded-3 mb-4">
+        <div class="card bg-warning-subtle border border-warning shadow-lg rounded-3 mb-4">
             <div class="card-header bg-warning text-white">
                 <h5 class="mb-0 py-3 text-center w-100">🔍 Filter Logs</h5>
             </div>
