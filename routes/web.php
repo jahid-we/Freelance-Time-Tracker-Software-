@@ -1,18 +1,18 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Authentication\AuthController;
 use App\Http\Controllers\Clients\ClientController;
 use App\Http\Controllers\Pages\AuthPageController;
-use App\Http\Controllers\pages\HomePageController;
 use App\Http\Controllers\Pages\ClientPageController;
+use App\Http\Controllers\Pages\DashboardPageController;
+use App\Http\Controllers\pages\HomePageController;
+use App\Http\Controllers\Pages\ProjectPageController;
 use App\Http\Controllers\Pages\ReportPageController;
+use App\Http\Controllers\Pages\TimeLogPageController;
 use App\Http\Controllers\Projects\ProjectController;
 use App\Http\Controllers\TimeLogs\TimeLogController;
-use App\Http\Controllers\Pages\ProjectPageController;
-use App\Http\Controllers\Pages\TimeLogPageController;
-use App\Http\Controllers\Authentication\AuthController;
-use App\Http\Controllers\Pages\DashboardPageController;
 use App\Http\Controllers\UserProfile\UserProfileController;
+use Illuminate\Support\Facades\Route;
 
 // ==================================================
 // API Route Definitions for Freelance Time Tracker
@@ -30,7 +30,6 @@ Route::middleware('guest')->controller(AuthController::class)->group(function ()
     Route::post('/reset-password', 'resetPassword')->name('reset-password');
 
 });
-
 
 // =====================================================
 // =============== Protected Auth Routes ===============
