@@ -33,7 +33,6 @@ const handleUpdatePassword = () => {
     showPasswordModal.value = true;
 };
 
-
 // Navigation functions
 const projectPage = () => router.visit("/project");
 const timeLogPage = () => router.visit("/timeLog");
@@ -120,7 +119,7 @@ onMounted(() => {
                                     Update Profile
                                 </button>
                                 <button
-                                @click.prevent="handleUpdatePassword()"
+                                    @click.prevent="handleUpdatePassword()"
                                     type="button"
                                     class="btn btn-light mt-3 mb-3 me-2 shadow"
                                 >
