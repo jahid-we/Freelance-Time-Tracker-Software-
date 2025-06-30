@@ -12,6 +12,25 @@ import Navbar from "../Components/DashBoardComp/Navbar.vue";
         <h2 class="mb-4"><i class="bi bi-house-door me-2"></i>Dashboard</h2>
 
         <div class="row g-4">
+            <!-- Profile -->
+            <div class="col-md-4">
+                <div
+                    class="card bg-secondary-subtle border-secondary h-100 hover-effect"
+                >
+                    <div class="card-body text-center">
+                        <i class="bi bi-person-circle fs-1 text-secondary"></i>
+                        <h5 class="card-title mt-3">Profile</h5>
+                        <p class="card-text">
+                            Manage your account and password.
+                        </p>
+                        <Link
+                            href="/profile"
+                            class="btn hover-effect btn-secondary btn-sm"
+                            >Go to Profile</Link
+                        >
+                    </div>
+                </div>
+            </div>
             <!-- Clients -->
             <div class="col-md-4">
                 <div
@@ -88,25 +107,6 @@ import Navbar from "../Components/DashBoardComp/Navbar.vue";
                 </div>
             </div>
 
-            <!-- Profile -->
-            <div class="col-md-4">
-                <div
-                    class="card bg-secondary-subtle border-secondary h-100 hover-effect"
-                >
-                    <div class="card-body text-center">
-                        <i class="bi bi-person-circle fs-1 text-secondary"></i>
-                        <h5 class="card-title mt-3">Profile</h5>
-                        <p class="card-text">
-                            Manage your account and password.
-                        </p>
-                        <Link
-                            href="/profile"
-                            class="btn hover-effect btn-secondary btn-sm"
-                            >Go to Profile</Link
-                        >
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
     <Footer />

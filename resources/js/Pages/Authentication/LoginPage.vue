@@ -2,6 +2,8 @@
 import { ref } from "vue";
 import { Link, router } from "@inertiajs/vue3";
 import axios from "axios";
+
+import NavBar from "../../Components/HomeComp/NavBar.vue";
 import Footer from "@/Components/Footer.vue";
 
 const email = ref("");
@@ -56,6 +58,7 @@ const goBack = () => window.history.back();
 <template>
     <div class="d-flex flex-column min-vh-100">
         <!-- Full height container -->
+        <NavBar />
         <div
             class="container d-flex justify-content-center align-items-center flex-grow-1"
         >
