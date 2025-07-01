@@ -1,98 +1,60 @@
-# Freelance Time Tracker API
+# Freelance Time Tracker App (Laravel + Inertia.js + Vue.js)
 
-This is a RESTful API built with Laravel that allows freelancers to track and manage their working hours across multiple clients and projects.
+A full-featured **freelance time tracking web application** built using **Laravel 12**, **Inertia.js**, and **Vue.js**. It enables freelancers to log working hours, manage clients/projects, generate reports, and receive email notifications.
 
-## 🚀 Features
+## 🚀 Features Summary
 
-- **Authentication:**
-  - Register, login, and logout using **Sanctum**.
-  
-- **Clients Management:**
-  - Create, update, delete, and list clients.
-
-- **Projects Management:**
-  - Create, update, delete, and list projects, including filtering by client.
-
-- **Notifications**:
-  - Sends an email notification (queued) when a user logs more than 8 hours in a day.
+- **Authentication (session-based)**
+- **Client & Project Management**
+- **Time Tracking (start, stop, manual)**
+- **Reports and PDF Export**
+- **Email Notification when logging >8 hours/day**
+- **SPA experience using Inertia.js + Vue.js**
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **Laravel 12**
-- **Sanctum** for authentication
-- **Eloquent ORM** for database interaction
-- **Laravel Queues** (with `database` driver)
-- **Notification System** for email alerts
+| Layer         | Technology                        |
+| ------------- | --------------------------------- |
+| Backend       | Laravel 12                        |
+| Frontend      | Vue.js + Inertia.js               |
+| Auth          | Laravel session (Auth)            |
+| ORM           | Laravel Eloquent ORM              |
+| Queue         | Laravel Queue (`database` driver) |
+| PDF Export    | Laravel DomPDF                    |
+| Notifications | Laravel Mail & Notification       |
+| UI            | Bootstrap 5                       |
 
 ---
 
-## 🧑‍💻 API Endpoints
+## ❗Important Notes
 
-### 🔐 Authentication Routes
-
-- `POST /api/register` — Register a new freelancer.
-- `POST /api/login` — Login a freelancer.
-- `POST /api/logout` — Logout a freelancer (requires `auth:sanctum`).
+- ✅ Laravel's session-based auth is secure and works well with Inertia-based SPA
+- ✅ Routes are defined in `web.php` and use middleware like `auth` and `guest`
+- ✅ CSRF tokens are regenerated on login/logout and validated in forms
 
 ---
+## 🔐 Authentication
 
-### 👤 Client Routes (require `auth:sanctum`)
+This app uses **Laravel session-based authentication** (via `Auth::attempt`) instead of Sanctum or Passport.
 
-- `POST /api/create-client` — Create a new client.
-- `GET /api/get-clients` — List all clients.
-- `GET /api/get-client/{id}` — View a specific client.
-- `POST /api/update-client/{id}` — Update a client.
-- `DELETE /api/delete-client/{id}` — Delete a client.
-- `DELETE /api/delete-all-clients` — Delete all clients.
+### Key Features
 
----
+- `POST /register` — Register new user
+- `POST /login` — Login with session
+- `GET /logout` — Logout (destroys session)
+- `POST /reset-password-email` — Send password reset link
+- `POST /reset-password` — Reset password using token
 
-### 📁 Project Routes (require `auth:sanctum`)
+### Reset Password Flow
 
-- `POST /api/create-project` — Create a new project.
-- `GET /api/get-all-projects` — List all projects.
-- `GET /api/get-project/{id}` — View a specific project.
-- `POST /api/update-project/{id}` — Update a project.
-- `DELETE /api/delete-project/{id}` — Delete a project.
-- `DELETE /api/delete-all-projects` — Delete all projects.
-- `GET /api/get-projects-by-client/{clientId}` — Get all projects by client ID.
+- Tokens are stored in `password_reset_tokens`
+- Email is sent with a custom notification
+- Reset uses a `confirmed` password field
+- Once reset, the token is deleted
 
----
-
-### ⏱️ Time Log Routes (require `auth:sanctum`)
-
-- `POST /api/start-timelog/{projectId}` — Start a new time log for a project.
-- `POST /api/end-timelog/{projectId}` — End the current active time log.
-- `POST /api/manual-entry/{projectId}` — Create a manual time log.
-- `GET /api/get-timelogs` — List all time logs.
-- `GET /api/get-timelog/{id}` — View a specific time log.
-- `POST /api/update-timelog/{id}` — Update a time log.
-- `DELETE /api/delete-timelog/{id}` — Delete a time log.
-- `DELETE /api/delete-all-timelogs` — Delete all time logs.
-
-### 📊 Reports
-
-- `GET /api/report?date=YYYY-MM-DD` — Get all time logs for a specific date.
-- `GET /api/report?client_id=id&date=YYYY-MM-DD` — Get time logs for a specific client on a specific date.
-- `GET /api/report?project_id=id&date=YYYY-MM-DD` — Get time logs for a specific project on a specific date.
-- `GET /api/report?from=YYYY-MM-DD&to=YYYY-MM-DD` — Get time logs within a specific date range.
-- `GET /api/report?client_id=id&from=YYYY-MM-DD&to=YYYY-MM-DD` — Get time logs for a specific client within a date range.
-- `GET /api/report?project_id=id&from=YYYY-MM-DD&to=YYYY-MM-DD` — Get time logs for a specific project within a date range.
-
-### 📊 Reports PDF
-
-- `GET /api/export-pdf` — Get all time logs.
-- `GET /api/export-pdf?date=YYYY-MM-DD` — Get all time logs for a specific date.
-- `GET /api/export-pdf?client_id=id&date=YYYY-MM-DD` — Get time logs for a specific client on a specific date.
-- `GET /api/export-pdf?project_id=id&date=YYYY-MM-DD` — Get time logs for a specific project on a specific date.
-- `GET /api/export-pdf?from=YYYY-MM-DD&to=YYYY-MM-DD` — Get time logs within a specific date range.
-- `GET /api/export-pdf?client_id=id&from=YYYY-MM-DD&to=YYYY-MM-DD` — Get time logs for a specific client within a date range.
-- `GET /api/export-pdf?project_id=id&from=YYYY-MM-DD&to=YYYY-MM-DD` — Get time logs for a specific project within a date range.
-- `GET /api/export-pdf?tag=billable` — Get time logs for the `billable` tag.
-- `GET /api/export-pdf?tag=non-billable` — Get time logs for the `non-billable` tag.
-
+> ✅ CSRF protection and session regeneration are handled properly for secure login/logout.
 > ⏰ Note: If a user logs more than 8 hours in a single day (via start, manual entry, or update), an email notification is automatically queued and sent.
 
 
@@ -100,44 +62,51 @@ This is a RESTful API built with Laravel that allows freelancers to track and ma
 
 ## 🧱 Database Structure
 
-### Users (Freelancers)
-- `id` (primary key)
-- `name` (string)
-- `email` (string, unique)
-- `password` (hashed string)
-- `created_at` (timestamp)
-- `updated_at` (timestamp)
+### 👤 Users (Freelancers)
 
-### Clients
-- `id` (primary key)
-- `user_id` (foreign key to `users` table)
-- `name` (string)
-- `email` (string)
-- `contact_person` (string)
-- `created_at` (timestamp)
-- `updated_at` (timestamp)
+- `id` — Primary key  
+- `name` — String (required)  
+- `email` — String (unique, required)  
+- `email_verified_at` — Timestamp (nullable)  
+- `password` — String (hashed)  
+- `remember_token` — String (used for "remember me" login)  
+- `created_at` — Timestamp  
+- `updated_at` — Timestamp  
 
-### Projects
-- `id` (primary key)
-- `client_id` (foreign key to `clients` table)
-- `title` (string)
-- `description` (text)
-- `status` (string: active/completed)
-- `deadline` (date)
-- `created_at` (timestamp)
-- `updated_at` (timestamp)
+### 👥 Clients
 
-### Time Logs
-- `id` (primary key)
-- `user_id` (foreign key to `users` table)
-- `project_id` (foreign key to `projects` table)
-- `start_time` (timestamp, nullable)
-- `end_time` (timestamp, nullable)
-- `description` (text, nullable)
-- `hours` (decimal, 8, 2)
-- `tags` (enum: billable, non-billable, nullable)
-- `created_at` (timestamp)
-- `updated_at` (timestamp)
+- `id` — Primary key  
+- `user_id` — Foreign key referencing `users(id)`, with `ON DELETE CASCADE`  
+- `name` — String (required)  
+- `email` — String (unique, required)  
+- `contact_person` — String (nullable)  
+- `created_at` — Timestamp  
+- `updated_at` — Timestamp  
+
+### 📁 Projects
+
+- `id` — Primary key  
+- `client_id` — Foreign key referencing `clients(id)`, with `ON DELETE CASCADE`  
+- `title` — String (required)  
+- `description` — Text (nullable)  
+- `status` — Enum: `active` (default) or `completed`  
+- `deadline` — Date (nullable)  
+- `created_at` — Timestamp  
+- `updated_at` — Timestamp  
+
+### ⏱️ Time Logs
+
+- `id` — Primary key
+- `is_running` — Boolean (default: false), indicates if the timer is currently active
+- `user_id` — Foreign key referencing `users(id)`, with `ON DELETE CASCADE`
+- `project_id` — Foreign key referencing `projects(id)`, with `ON DELETE CASCADE`
+- `start_time` — Timestamp (nullable)
+- `end_time` — Timestamp (nullable)
+- `description` — Text (nullable)
+- `hours` — Decimal(8,2), default `0`
+- `tags` — Enum: `billable` or `non-billable` (nullable)
+- `created_at` — Timestamp
+- `updated_at` — Timestamp
 
 ---
 
@@ -169,24 +138,6 @@ php artisan queue:work
 php artisan serve
 
 ```
-
-### 📬 Postman Collection
-
-> You can access and test the API endpoints using the following Postman collection:
-
-👉 [Click here to open the Postman Collection](https://www.postman.com/jahidhasan37/workspace/laravel-jahid/collection/32325662-ab500bb0-493d-4985-92a9-b706217905b7?action=share&creator=32325662&active-environment=32325662-1ca1441b-aa03-45ce-9924-a4616d2eb092)
-
-
-## 📌 Note for API Testing via Postman
-> To allow smooth testing of the API using Postman, CSRF protection has been disabled for all routes. This was done by updating the following code in:
-```bash
-# File path: bootstrap/app.php
-$middleware->validateCsrfTokens(except: ['*']);
-
-```
-This ensures that requests like POST, PUT, and DELETE can be made without needing a CSRF token. If CSRF protection needs to be re-enabled later, you can adjust the exception list accordingly.
-
-> 🔒 Important: For production or continued development, please make sure to re-enable CSRF protection by updating or removing the exception list.
 ---
 
 ## 🧑‍💻 Developer
