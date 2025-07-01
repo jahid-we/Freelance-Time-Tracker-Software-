@@ -135,7 +135,7 @@ php artisan migrate --seed
 php artisan queue:work
 
 # 7. Start the Laravel Development Server
-php artisan serve
+composer run dev
 
 ```
 ---
