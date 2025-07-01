@@ -1,6 +1,43 @@
-# Freelance Time Tracker App (Laravel + Inertia.js + Vue.js)
+# Freelance Time Tracker Software (Laravel + Inertia.js + Vue.js)
+## 📄 Software Description
 
-A full-featured **freelance time tracking web application** built using **Laravel 12**, **Inertia.js**, and **Vue.js**. It enables freelancers to log working hours, manage clients/projects, generate reports, and receive email notifications.
+The **Freelance Time Tracker Software** is a full-featured web application built with **Laravel 12**, **Inertia.js**, and **Vue.js** to help freelancers and remote professionals manage their work hours with ease. It offers a smooth Single Page Application (SPA) experience and focuses on accurate time tracking, client/project organization, and reporting.
+
+---
+
+## ✅ What You Can Do with This Software
+
+- ⏱️ **Track Work Hours**  
+  Start/stop a real-time timer or manually log time entries with descriptions.
+
+- 👥 **Manage Clients and Projects**  
+  Add clients, assign projects, set statuses, and manage deadlines efficiently.
+
+- 📊 **Generate Reports**  
+  Filter logs by date, client, or project. Export detailed reports as PDFs.
+
+- 📧 **Email Notifications**  
+  Automatically get notified via email if more than 8 hours are logged in a day.
+
+- 🔐 **Secure Authentication**  
+  Session-based login system with registration, logout, and password reset flow.
+
+- 🧮 **Billable and Non-Billable Tags**  
+  Easily categorize time logs for better tracking and invoicing clarity.
+
+- ⚡ **Modern SPA Interface**  
+  Built with Vue.js and Inertia.js for a fast, app-like experience.
+
+---
+
+## 🎯 Ideal For
+
+- Freelancers and consultants
+- Solo developers and remote workers
+- Small agencies handling multiple clients
+- Anyone needing structured time tracking and reporting
+
+---
 
 ## 🚀 Features Summary
 
