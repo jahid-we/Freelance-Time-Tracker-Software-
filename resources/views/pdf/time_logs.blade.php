@@ -3,22 +3,50 @@ use Carbon\Carbon;
 ?>
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <title>Time Logs Report</title>
     <style>
-        body { font-family: DejaVu Sans, sans-serif; font-size: 12px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { border: 1px solid #000; padding: 6px; text-align: left; }
-        th { background-color: #f2f2f2; }
-        h1, h3 { text-align: center; margin-bottom: 10px; }
+        body {
+            font-family: DejaVu Sans, sans-serif;
+            font-size: 12px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            border: 1px solid #000;
+            padding: 6px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        h1,
+        h3 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
+
 <body>
     <h1>{{ config('app.name') }} - Time Logs Report</h1>
+    <p style="text-align: center; font-size: 12px; margin-bottom: 10px;">
+        Generated on: {{ \Carbon\Carbon::now('Asia/Dhaka')->format('F j, Y h:i A') }}
+    </p>
 
 
-    @if($logs->isEmpty())
+
+    @if ($logs->isEmpty())
         <p>No time logs found for the selected criteria.</p>
     @else
         <table>
@@ -35,7 +63,7 @@ use Carbon\Carbon;
                 </tr>
             </thead>
             <tbody>
-                @foreach($logs as $log)
+                @foreach ($logs as $log)
                     <tr>
                         <td>{{ Carbon::parse($log->start_time)->format('Y-m-d') }}</td>
                         <td>{{ $log->project->title ?? 'N/A' }}</td>
@@ -51,4 +79,5 @@ use Carbon\Carbon;
         </table>
     @endif
 </body>
+
 </html>

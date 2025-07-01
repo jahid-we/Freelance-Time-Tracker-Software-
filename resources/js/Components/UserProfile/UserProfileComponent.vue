@@ -43,38 +43,53 @@ onMounted(() => {
     fetchUserProfile();
 });
 </script>
+
 <template>
-    <div
-        class="d-flex justify-content-center align-items-center min-vh-100 bg-light"
-    >
+    <div class="d-flex justify-content-center align-items-center min-vh-100">
         <div class="container">
             <div class="row justify-content-center">
+                <div class="container mb-2 d-flex justify-content-center">
+                    <div class="col-md-8">
+                        <div
+                            class="alert alert-secondary text-center shadow"
+                            role="alert"
+                        >
+                            📢 <strong>Note:</strong> Use the buttons below to
+                            manage your profile and navigate between sections.
+                            You can also export PDF reports from the Reports
+                            page.
+                        </div>
+                    </div>
+                </div>
                 <div class="col-md-8 col-lg-6">
                     <!-- Navigation buttons -->
-                    <button
-                        @click.prevent="clientPage()"
-                        class="btn hover-effect btn-primary shadow me-3 mb-3"
-                    >
-                        <i class="bi bi-people-fill"></i> Clients
-                    </button>
-                    <button
-                        @click.prevent="projectPage()"
-                        class="btn hover-effect btn-success shadow mb-3 me-3"
-                    >
-                        <i class="bi bi-kanban"></i> Projects
-                    </button>
-                    <button
-                        @click.prevent="timeLogPage()"
-                        class="btn hover-effect btn-warning shadow mb-3 me-3"
-                    >
-                        <i class="bi bi-clock"></i> Time Logs
-                    </button>
-                    <button
-                        @click.prevent="reportPage()"
-                        class="btn hover-effect btn-info shadow mb-3 me-3"
-                    >
-                        <i class="bi bi-bar-chart-line"></i> Reports
-                    </button>
+                    <div class="mb-4">
+                        <button
+                            @click.prevent="clientPage()"
+                            class="btn btn-primary shadow me-2 mb-2"
+                        >
+                            <i class="bi bi-people-fill"></i> Clients
+                        </button>
+                        <button
+                            @click.prevent="projectPage()"
+                            class="btn btn-success shadow me-2 mb-2"
+                        >
+                            <i class="bi bi-kanban"></i> Projects
+                        </button>
+                        <button
+                            @click.prevent="timeLogPage()"
+                            class="btn btn-warning shadow me-2 mb-2"
+                        >
+                            <i class="bi bi-clock"></i> Time Logs
+                        </button>
+                        <button
+                            @click.prevent="reportPage()"
+                            class="btn btn-info shadow me-2 mb-2"
+                        >
+                            <i class="bi bi-bar-chart-line"></i> Reports
+                        </button>
+                    </div>
+
                     <div class="card shadow bg-secondary-subtle">
                         <div class="card-header bg-secondary text-white">
                             <h5 class="mb-0">
@@ -82,7 +97,7 @@ onMounted(() => {
                                 User Profile Information
                             </h5>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body p-4">
                             <form>
                                 <div class="mb-3">
                                     <label for="name" class="form-label"
@@ -113,7 +128,7 @@ onMounted(() => {
                                 <button
                                     @click.prevent="handleUpdateProfile()"
                                     type="button"
-                                    class="btn btn-outline-secondary mt-3 mb-3 me-2 shadow"
+                                    class="btn btn-outline-secondary shadow me-2 mt-2"
                                 >
                                     <i class="bi bi-pencil-square me-1"></i>
                                     Update Profile
@@ -121,7 +136,7 @@ onMounted(() => {
                                 <button
                                     @click.prevent="handleUpdatePassword()"
                                     type="button"
-                                    class="btn btn-light mt-3 mb-3 me-2 shadow"
+                                    class="btn btn-light shadow mt-2"
                                 >
                                     <i class="bi bi-key me-1"></i>
                                     Update Password
@@ -132,12 +147,14 @@ onMounted(() => {
                 </div>
             </div>
         </div>
+
         <UserInfoUpdateModal
             :visible="showUpdateModal"
             @cancel="showUpdateModal = false"
             @updated="
                 () => {
-                    (showUpdateModal = false), fetchUserProfile();
+                    showUpdateModal = false;
+                    fetchUserProfile();
                 }
             "
         />
@@ -150,5 +167,5 @@ onMounted(() => {
 </template>
 
 <style scoped>
-/* Optional: tweak padding/margins here if needed */
+/* Adjust spacing for layout clarity */
 </style>
