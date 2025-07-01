@@ -115,8 +115,8 @@ This app uses **Laravel session-based authentication** (via `Auth::attempt`) ins
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/jahid-we/Freelance-Time-Tracker-Api.git
-cd Freelance-Time-Tracker-Api
+git clone https://github.com/jahid-we/Freelance-Time-Tracker-Software-.git
+cd Freelance-Time-Tracker-Software-
 
 
 # 2. Install Dependencies
