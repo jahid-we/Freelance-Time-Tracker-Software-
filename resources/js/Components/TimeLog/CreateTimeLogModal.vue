@@ -116,7 +116,7 @@ onMounted(() => {
                 <div class="modal-body">
                     <div class="row g-3">
                         <div class="col-md-6">
-                            <label class="form-label">Select Client</label>
+                            <label class="form-label">Select Project</label>
                             <select
                                 v-model="projectId"
                                 class="form-select stylish-input mb-3"

@@ -30,7 +30,7 @@ const isEditing = ref(false);
 
 
 const handleUpdate = async () => {
-    if (!newClientId.value) {
+    if (!newClientData.value.id) {
         alert("No valid client ID provided for update");
         console.error("No valid client ID provided for update");
         return;
